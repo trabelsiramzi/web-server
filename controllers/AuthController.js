@@ -13,9 +13,7 @@ const AuthController = {
       if (!user) {
         return res.status(401).json({ message: 'Invalid credentials User' });
       }
-      console.log('Password:', mot_de_passe); // Log the provided password
-      console.log('Hashed Password:', user.mot_de_passe); // Log the hashed password from the database
-
+      
       // Compare the provided password with the hashed password stored in the database
       bcrypt.compare(mot_de_passe, user.mot_de_passe, (err, isMatch) => {
         if (err || !isMatch) {
@@ -24,7 +22,12 @@ const AuthController = {
         
         // Passwords match, generate JWT token
         const payload = { user: { id: user.id } };
-        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+        
+        // Retrieve the JWT secret key from environment variables
+        const jwtSecret = process.env.JWT_SECRET;
+        
+        // Use jwtSecret in JWT signing process
+        const token = jwt.sign(payload, jwtSecret, { expiresIn: '1h' });
 
         res.status(200).json({ token });
       });

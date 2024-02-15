@@ -1,4 +1,3 @@
-// userRoutes.js
 const express = require('express');
 const router = express.Router();
 const verifyToken = require('../middlewares/authMiddleware');
@@ -9,11 +8,11 @@ router.get('/protected', verifyToken, (req, res) => {
     res.status(200).json({ message: 'This is a protected route for users' });
 });
 
-// Other routes for users
-router.get('/', UserController.getAllUsers);
-router.post('/', UserController.createUser);
-router.get('/:id', UserController.getUserById);
-router.put('/:id', UserController.updateUser);
-router.delete('/:id', UserController.deleteUser);
+// Routes for users
+router.get('/', verifyToken, UserController.getAllUsers);
+router.post('/', UserController.createUser); // No token verification for createUser
+router.get('/:id', verifyToken, UserController.getUserById);
+router.put('/:id', verifyToken, UserController.updateUser);
+router.delete('/:id', verifyToken, UserController.deleteUser);
 
 module.exports = router;

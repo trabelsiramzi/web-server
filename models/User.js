@@ -1,6 +1,7 @@
+// models/User.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/connexion.js');
-const Role = require('./Role.js');
+const bcrypt = require('bcrypt');
 
 const User = sequelize.define('User', {
   nom: {
@@ -27,8 +28,14 @@ const User = sequelize.define('User', {
   }
 }, {
   // Add timestamps option to include createdAt and updatedAt columns
-  timestamps: false
+  timestamps: false,
+  hooks: {
+    beforeCreate: async (user) => {
+      // Hash the password before creating the user
+      const hashedPassword = await bcrypt.hash(user.mot_de_passe, 10);
+      user.mot_de_passe = hashedPassword;
+    }
+  }
 });
-
 
 module.exports = User;

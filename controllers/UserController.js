@@ -1,5 +1,5 @@
+const { validationResult } = require('express-validator');
 const User = require('../models/User');
-const { Op } = require('sequelize');
 
 // Fetch all users with pagination
 exports.getAllUsers = async (req, res) => {
@@ -23,6 +23,12 @@ exports.getAllUsers = async (req, res) => {
 // Create a new user
 exports.createUser = async (req, res) => {
     try {
+        // Check for validation errors
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
         const newUser = await User.create(req.body);
         res.status(201).json(newUser);
     } catch (error) {

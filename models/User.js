@@ -1,6 +1,6 @@
-// models/User.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/connexion.js');
+const Role = require('./Role.js');
 
 const User = sequelize.define('User', {
   nom: {
@@ -25,7 +25,10 @@ const User = sequelize.define('User', {
   mot_de_passe: {
     type: DataTypes.STRING
   }
+}, {
+  // Add timestamps option to include createdAt and updatedAt columns
+  timestamps: false
 });
 
-module.exports = User;
 
+module.exports = User;

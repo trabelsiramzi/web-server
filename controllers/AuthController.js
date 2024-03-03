@@ -21,7 +21,15 @@ const AuthController = {
         }
         
         // Passwords match, generate JWT token
-        const payload = { user: { id: user.id } };
+        const payload = {
+          user: {
+            id: user.id,
+            email: user.email,
+            nom: user.nom,
+            prenom: user.prenom
+            // Add more user details as needed
+          }
+        };
         
         // Retrieve the JWT secret key from environment variables
         const jwtSecret = process.env.JWT_SECRET;
@@ -29,7 +37,7 @@ const AuthController = {
         // Use jwtSecret in JWT signing process
         const token = jwt.sign(payload, jwtSecret, { expiresIn: '1h' });
 
-        res.status(200).json({ token });
+        res.status(200).json({ token, user: payload.user });
       });
     } catch (error) {
       console.error(error);

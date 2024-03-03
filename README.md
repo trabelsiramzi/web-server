@@ -46,12 +46,13 @@ CREATE TABLE Reservation (
 );
 
 -- Table pour les avis
-CREATE TABLE Review (
+CREATE TABLE Reviews (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    customer_name VARCHAR(255) NOT NULL,
-    rating INT NOT NULL,
     comment TEXT,
-    FOREIGN KEY (UserId) REFERENCES Users(id)
+    rating INT,
+    customer_name VARCHAR(255),
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES Users(id)
 );
 
 -- Table pour les catégories

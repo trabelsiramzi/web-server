@@ -61,9 +61,10 @@ CREATE TABLE Category (
     name VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE Order (
+CREATE TABLE Orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
     customer_name VARCHAR(255) NOT NULL,
     total_amount DECIMAL(10, 2) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+

@@ -4,7 +4,10 @@ const User = require('./User');
 
 const Review = sequelize.define('Review', {
   comment: DataTypes.TEXT,
-  rating: DataTypes.INTEGER
+  rating: DataTypes.INTEGER,
+  customer_name: DataTypes.STRING // Add the new attribute
+}, {
+  timestamps: false // Désactiver les horodatages automatiques
 });
 
 Review.belongsTo(User);

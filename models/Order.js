@@ -1,16 +1,21 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/connexion');
-const User = require('./User');
-const Item = require('./Item');
 
 const Order = sequelize.define('Order', {
-  totalPrice: DataTypes.FLOAT
+  customer_name: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  total_amount: {
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: false
+  },
+  created_At: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW
+  }
+}, {
+  timestamps: false // Add this line to disable timestamps
 });
-
-Order.belongsTo(User);
-User.hasMany(Order);
-
-Order.belongsToMany(Item, { through: 'OrderItem' });
-Item.belongsToMany(Order, { through: 'OrderItem' });
 
 module.exports = Order;

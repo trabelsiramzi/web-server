@@ -1,13 +1,25 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/connexion');
-const User = require('./User');
 
 const Reservation = sequelize.define('Reservation', {
-  date: DataTypes.DATE,
-  numberOfPeople: DataTypes.INTEGER
+  customer_name: {
+    type: DataTypes.STRING,
+    allowNull: false // Ne peut pas être nul
+  },
+  date: {
+    type: DataTypes.DATE,
+    allowNull: false // Ne peut pas être nul
+  },
+  time: {
+    type: DataTypes.TIME,
+    allowNull: false // Ne peut pas être nul
+  },
+  party_size: {
+    type: DataTypes.INTEGER,
+    allowNull: false // Ne peut pas être nul
+  }
+}, {
+  timestamps: false // Désactiver les horodatages automatiques
 });
-
-Reservation.belongsTo(User);
-User.hasMany(Reservation);
 
 module.exports = Reservation;

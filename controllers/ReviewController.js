@@ -1,7 +1,7 @@
 const Review = require('../models/Review');
+const { validationResult } = require('express-validator');
 
 const ReviewController = {
-  // Récupérer tous les avis
   getAllReviews: async (req, res) => {
     try {
       const reviews = await Review.findAll();
@@ -12,9 +12,13 @@ const ReviewController = {
     }
   },
 
-  // Créer un nouvel avis
   createReview: async (req, res) => {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+
       const newReview = await Review.create(req.body);
       res.status(201).json(newReview);
     } catch (error) {
@@ -23,7 +27,6 @@ const ReviewController = {
     }
   },
 
-  // Récupérer un avis par son ID
   getReviewById: async (req, res) => {
     try {
       const review = await Review.findByPk(req.params.id);
@@ -37,7 +40,6 @@ const ReviewController = {
     }
   },
 
-  // Mettre à jour un avis par son ID
   updateReview: async (req, res) => {
     try {
       const review = await Review.findByPk(req.params.id);
@@ -52,7 +54,6 @@ const ReviewController = {
     }
   },
 
-  // Supprimer un avis par son ID
   deleteReview: async (req, res) => {
     try {
       const review = await Review.findByPk(req.params.id);

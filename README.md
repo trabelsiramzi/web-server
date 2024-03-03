@@ -51,7 +51,7 @@ CREATE TABLE Review (
     customer_name VARCHAR(255) NOT NULL,
     rating INT NOT NULL,
     comment TEXT,
-    FOREIGN KEY (user_id) REFERENCES Users(id)
+    FOREIGN KEY (UserId) REFERENCES Users(id)
 );
 
 -- Table pour les catégories

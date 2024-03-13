@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const routes = require('./routes');
 const mysql = require('mysql');
 const dotenv = require('dotenv');
+const cors = require('cors'); // Import CORS middleware
 
 // Load environment variables
 dotenv.config();
@@ -31,6 +32,7 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(bodyParser.json());
+app.use(cors()); // Enable CORS for all routes
 
 // Routes
 app.use('/api', routes);
